@@ -1,0 +1,18 @@
+body {
+    font-family: 'Poppins', 'Inter', sans-serif;
+}
+
+.login-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-card .card-header {
+    text-align: center;
+}
+
+.login-card .card-body a:hover {
+    color: blue;
+}
