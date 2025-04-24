@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\SocialAuthController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +17,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages/login');
+    $data['title'] = 'Login';
+    $data['user'] = Session::get('provider_id');
+    if (!$data['user']) {
+        return view('pages/login', compact('data'));
+    } else {
+        return redirect('/home');
+    }
 });
 
 Route::get('/login/{provider}', [SocialAuthController::class, 'redirectToProvider'])->name('social.login');
 Route::get('/login/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('social.callback');
+
+Route::get('/home', [TaskController::class, 'index']);
+
+Route::get('/logout/{id}', [SocialAuthController::class, 'logout'])->name('auth.logout');
