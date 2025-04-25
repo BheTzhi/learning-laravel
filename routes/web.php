@@ -29,6 +29,8 @@ Route::get('/', function () {
 Route::get('/login/{provider}', [SocialAuthController::class, 'redirectToProvider'])->name('social.login');
 Route::get('/login/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('social.callback');
 
-Route::get('/home', [TaskController::class, 'index']);
+Route::get('/home', [TaskController::class, 'index'])->name('home');
+Route::post('/task/store', [TaskController::class, 'store'])->name('url.store');
+Route::delete('/task/{id}', [TaskController::class, 'destroy'])->name('url.destroy');
 
 Route::get('/logout/{id}', [SocialAuthController::class, 'logout'])->name('auth.logout');

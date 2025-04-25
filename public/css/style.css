@@ -115,15 +115,19 @@ body.dark .topbar .menu a {
 /* End Top Bar */
 
 /* Footer */
-.footer {
+body footer {
     padding: 20px;
     background-color: #f5f5f5;
     color: #333;
     font-size: 0.9rem;
     border-top: 1px solid #ddd;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
-body.dark .footer {
+body.dark footer {
     background-color: #1a1a1a;
     color: #ccc;
     border-top: 1px solid #333;

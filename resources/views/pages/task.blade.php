@@ -3,14 +3,21 @@
 @yield('content')
 <div class="content">
     <div class="col-12 mb-4">
-        <a class="btn btn-outline-primary adds"><i class="fas fa-plus"></i> Add Task</a>
+        <a class="btn btn-outline-primary mb-4 adds"><i class="fas fa-plus"></i> Add Task</a>
+        @if (session('messages'))
+            @foreach (session('messages') as $key => $message)
+                <div class="alert alert-{{ $key }}">
+                    {{ $message }}
+                </div>
+            @endforeach
+        @endif
     </div>
     <div class="card card-form" style="display: none;">
         <div class="card-title" style="margin: 10px;">
             <h4>Form Add Tasks</h4>
         </div>
         <div class="card-body mb-3">
-            <form action="" method="post">
+            <form action="{{ route('url.store', ['url' => 'task']) }}" method="post">
                 @csrf
                 <div class="row">
                     <div class="form-group col-6 mb-4">
@@ -90,34 +97,40 @@
                         <th scope="col">Updated At</th>
                         <th scope="col">User</th>
                         <th scope="col">Category</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                        <td>7</td>
-                        <td>8</td>
-                        <td>9</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                        <td>7</td>
-                        <td>8</td>
-                        <td>9</td>
-                        <td>10</td>
-                    </tr>
-
+                    @php
+                        $no = 1;
+                    @endphp
+                    @foreach ($data['tasks'] as $task)
+                        <tr>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $task->title }}</td>
+                            <td>{{ $task->description }}</td>
+                            <td>{{ $task->status }}</td>
+                            <td>{{ $task->priority }}</td>
+                            <td>{{ $task->due_date }}</td>
+                            <td>{{ $task->created_at }}</td>
+                            <td>{{ $task->updated_at }}</td>
+                            <td>{{ $task->user_id }}</td>
+                            <td>{{ $task->category }}</td>
+                            <td>
+                                <a href="" class="btn btn-md btn-outline-info"><i
+                                        class="far fa-fw fa-edit"></i></a>
+                                <form
+                                    action="{{ route('url.destroy', ['url' => 'task', 'id' => Crypt::encrypt($task->id)]) }}"
+                                    method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button onclick="return confirm('Do you want to delete the task.?');" type="submit"
+                                        class="btn btn-md btn-outline-danger"><i
+                                            class="fas fa-fw fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
