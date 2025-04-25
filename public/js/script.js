@@ -9,24 +9,25 @@ AOS.init({
 })
 
 const toggle = document.getElementById('darkModeToggle')
-toggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark')
-    const isDark = document.body.classList.contains('dark')
-    localStorage.setItem('theme', isDark ? 'dark' : 'light')
-    showToast(isDark ? '🌙 Dark Mode Aktif' : '☀️ Light Mode Aktif')
+if (toggle) {
+    toggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark')
+        const isDark = document.body.classList.contains('dark')
+        localStorage.setItem('theme', isDark ? 'dark' : 'light')
+        showToast(isDark ? '🌙 Dark Mode Aktif' : '☀️ Light Mode Aktif')
 
-    const cards = document.querySelectorAll('.card-body')
-    const tables = document.querySelectorAll('table')
+        const cards = document.querySelectorAll('.card-body')
+        const tables = document.querySelectorAll('table')
 
-    cards.forEach(card => {
-        card.classList.toggle('bg-dark', isDark)
+        cards.forEach(card => {
+            card.classList.toggle('bg-dark', isDark)
+        })
+
+        tables.forEach(table => {
+            table.classList.toggle('table-dark', isDark)
+        })
     })
-
-    tables.forEach(table => {
-        table.classList.toggle('table-dark', isDark)
-    })
-})
-
+}
 
 if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark')
