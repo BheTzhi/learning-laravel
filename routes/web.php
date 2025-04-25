@@ -31,6 +31,7 @@ Route::get('/login/{provider}/callback', [SocialAuthController::class, 'handlePr
 
 Route::get('/home', [TaskController::class, 'index'])->name('home');
 Route::post('/task/store', [TaskController::class, 'store'])->name('url.store');
+Route::get('/task/{id}', [TaskController::class, 'getById'])->name('url.getById');
+Route::put('/task', [TaskController::class, 'update'])->name('url.update');
 Route::delete('/task/{id}', [TaskController::class, 'destroy'])->name('url.destroy');
-
 Route::get('/logout/{id}', [SocialAuthController::class, 'logout'])->name('auth.logout');
